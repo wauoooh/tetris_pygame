@@ -36,7 +36,12 @@ class BlockGroup(object):
         if pygame.time.get_ticks() - self.time > 100:
             self.time = pygame.time.get_ticks()
             for b in self.blocks:
-                b.drop()
+                b.move((0,1))
+     
+    # 左右移动方块组，distance为标量，右正左负           
+    def move(self,distance):
+        for b in self.blocks:
+            b.move((distance, 0))        
       
                
     def getBlockIndexes(self):
