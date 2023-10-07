@@ -38,14 +38,7 @@ class BlockGroup(object):
             for b in self.blocks:
                 b.drop()
       
-      
-      
-      
-      
-      
-      
-      
-                
+               
     def getBlockIndexes(self):
         return [block.getIndex()  for block in self.blocks]
     
@@ -60,3 +53,15 @@ class BlockGroup(object):
     
     def addBlocks(self, blk ):
         self.blocks.append( blk )
+        
+    def isOnLeftEdge(self):
+        for b in self.blocks:
+            if b.colIdx == 0:
+                return True
+        return False
+    
+    def isOnRightEdge(self):
+        for b in self.blocks:
+            if b.colIdx == GAME_COL-1:
+                return True
+        return False
