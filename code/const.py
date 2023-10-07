@@ -13,13 +13,13 @@ class BlockGroupType:
     DROP = 1
     
 BLOCK_RES = {
-    BlockType.RED : "../pic/red.png",
-    BlockType.ORANGE : "../pic/orange.png",
-    BlockType.YELLOW : "../pic/yellow.png",
-    BlockType.GREEN : "../pic/green.png",
-    BlockType.CYAN : "../pic/cyan.png",
-    BlockType.BLUE : "../pic/blue.png",
-    BlockType.PURPLE : "../pic/purple.png",
+    BlockType.RED : "pic/red.png",
+    BlockType.ORANGE : "pic/orange.png",
+    BlockType.YELLOW : "pic/yellow.png",
+    BlockType.GREEN : "pic/green.png",
+    BlockType.CYAN : "pic/cyan.png",
+    BlockType.BLUE : "pic/blue.png",
+    BlockType.PURPLE : "pic/purple.png",
 }
 
 BLOCK_SIZE_W = 32
