@@ -6,8 +6,10 @@ from blockGroup import *
 class Game(pygame.sprite.Sprite):
     def __init__(self, surface):
         self.surface = surface
-        self.pressTime = [pygame.time.get_ticks(),pygame.time.get_ticks(),pygame.time.get_ticks(),pygame.time.get_ticks()]
+        self.pressTime = [pygame.time.get_ticks()]*4
         self.pressFlag = [0,0,0,0]  # 依次为上下左右
+        self.eliminateFlag = [0]*GAME_ROW
+        self.flickerTime = [pygame.time.get_ticks()]*GAME_ROW
         conf = BlockGroup.GenerateWallBlockConfig()
         self.wallBlockGroup = BlockGroup(BlockGroupType.WALL, BLOCK_SIZE_W, BLOCK_SIZE_H, conf, self.getRelPos())
         self.fixedBlockGroup = BlockGroup(BlockGroupType.FIXED, BLOCK_SIZE_W, BLOCK_SIZE_H, [], self.getRelPos())
@@ -59,6 +61,35 @@ class Game(pygame.sprite.Sprite):
                 return True
         return False
     
+    def checkEliminate(self):
+        eliminateCount = [0]*GAME_ROW
+        for b in self.fixedBlockGroup.blocks:
+            idx = b.getIndex()
+            eliminateCount[idx[0]] += 1
+        for x in range(len(eliminateCount)):
+            if eliminateCount[x]==GAME_COL and self.eliminateFlag[x] == 0:
+                self.eliminateFlag[x] = 8
+                
+    def executeEliminate(self):
+        for x,flag in enumerate(self.eliminateFlag):
+            if flag == 1:
+                for i in range(len(self.fixedBlockGroup.blocks)-1,-1,-1):
+                    b = self.fixedBlockGroup.blocks[i]
+                    if b.getIndex()[0] < x:
+                        b.move((1,0))
+                    elif b.getIndex()[0] == x:
+                        del self.fixedBlockGroup.blocks[i]
+                self.eliminateFlag[x] = 0
+            
+    def eliminateFlicker(self):
+        for x,flag in enumerate(self.eliminateFlag):
+            if flag > 1 and (pygame.time.get_ticks()-self.flickerTime[x]) > FLICKER_CYCLE:
+                self.eliminateFlag[x] -= 1
+                self.flickerTime[x] = pygame.time.get_ticks()
+                for b in self.fixedBlockGroup.blocks:
+                    if b.getIndex()[0] == x:
+                        b.display = not b.display
+                        
     def update(self):
         # self.fixedBlockGroup.update()
         if self.dropBlockGroup:
@@ -73,6 +104,10 @@ class Game(pygame.sprite.Sprite):
                 self.fixedBlockGroup.addBlocks(blk)
             self.dropBlockGroup.clearBlocks()
             self.dropBlockGroup = None
+            
+        self.checkEliminate()
+        self.executeEliminate()
+        self.eliminateFlicker()
         
         if self.dropBlockGroup:
             if self.pressFlag[0]:
@@ -96,12 +131,6 @@ class Game(pygame.sprite.Sprite):
         self.wallBlockGroup.draw(self.surface)
         if self.dropBlockGroup:
             self.dropBlockGroup.draw(self.surface)
-    
-
-        
-    
-    
-    
-    
+     
     def getRelPos(self):
         return (240,50)

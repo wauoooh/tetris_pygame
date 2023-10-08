@@ -78,9 +78,6 @@ class BlockGroup(object):
     def getBlockIndexes(self):
         return [block.getIndex()  for block in self.blocks]
     
-    def getBlockNextIndexes(self):
-        return [block.getNextIndex()  for block in self.blocks]
-    
     def getBlocks(self):
         return self.blocks
 

@@ -29,6 +29,7 @@ GAME_ROW = 17
 GAME_COL = 10
 
 MIN_PRESS_TIME = 100    # 按键按压超过此时间记为有效(ms)
+FLICKER_CYCLE = 100
 
 BLOCK_SHAPE = [
     [[(0,0),(0,1),(1,0),(1,1)]],  # 方形

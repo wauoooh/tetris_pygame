@@ -6,7 +6,7 @@ from blockGroup import *
 from game import *
 
 pygame.init()
-DISPLAYSURF = pygame.display.set_mode((800, 600))
+DISPLAYSURF = pygame.display.set_mode((800, 622))
 
 game = Game(DISPLAYSURF)
     

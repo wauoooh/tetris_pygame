@@ -17,10 +17,13 @@ DISPLAYSURF.blit(m_image,m_rect)
 
 pygame.display.update()
 
-aa = [(i,-1) for i in range(17)]
-aa.extend([(i,10) for i in range(17)])
-aa.extend([(17,i-1) for i in range(12)])
-print(aa)
+# aa = [(i,-1) for i in range(17)]
+# aa.extend([(i,10) for i in range(17)])
+# aa.extend([(17,i-1) for i in range(12)])
+# print(aa)
+
+aaa = [1,2,3,4,5]
+print(aaa)
 
 while True:
     for event in pygame.event.get():
