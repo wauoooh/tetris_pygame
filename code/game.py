@@ -75,6 +75,11 @@ class Game(pygame.sprite.Sprite):
             self.dropBlockGroup = None
         
         if self.dropBlockGroup:
+            if self.pressFlag[0]:
+                self.dropBlockGroup.rotate(0)
+                if self.checkCollide():
+                    self.dropBlockGroup.rotate(1)
+                self.pressFlag[0] = 0
             if self.pressFlag[1]:
                 self.dropBlockGroup.updateTime = 100
             else:
