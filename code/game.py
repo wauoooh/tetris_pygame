@@ -67,7 +67,7 @@ class Game(pygame.sprite.Sprite):
             self.generateDropBlockGroup()
             
         if self.checkCollide():
-            self.dropBlockGroup.move((0,-1))
+            self.dropBlockGroup.move((-1,0))
             blocks = self.dropBlockGroup.getBlocks()
             for blk in blocks:
                 self.fixedBlockGroup.addBlocks(blk)
@@ -80,9 +80,9 @@ class Game(pygame.sprite.Sprite):
             else:
                 self.dropBlockGroup.updateTime = 700
             if self.pressFlag[2]+self.pressFlag[3]:
-                self.dropBlockGroup.move((self.pressFlag[3]-self.pressFlag[2],0))
+                self.dropBlockGroup.move((0,self.pressFlag[3]-self.pressFlag[2]))
                 if self.checkCollide():
-                    self.dropBlockGroup.move((self.pressFlag[2]-self.pressFlag[3],0))
+                    self.dropBlockGroup.move((0,self.pressFlag[2]-self.pressFlag[3]))
                 self.pressFlag[2] = 0
                 self.pressFlag[3] = 0
     

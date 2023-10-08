@@ -42,10 +42,10 @@ class Block(pygame.sprite.Sprite):
         self.rowIdx += 1
         self.updateImagePos()
         
-    # 移动方块，distance = (x,y)，右正左负，下正上负
+    # 移动方块，distance = (x,y)，下正上负，右正左负
     def move(self, distance):
-        self.colIdx += distance[0]
-        self.rowIdx += distance[1]
+        self.rowIdx += distance[0]
+        self.colIdx += distance[1]
         self.updateImagePos()
         
     def getIndex(self):

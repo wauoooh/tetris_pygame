@@ -40,7 +40,7 @@ class BlockGroup(object):
             blk = Block(config['blockType'], config['rowIdx'], config['colIdx'], width, height, relPos)
             self.blocks.append(blk)
      
-    # 移动方块，distance = (x,y)，右正左负，下正上负           
+    # 移动方块，distance = (x,y)，下正上负，右正左负         
     def move(self, distance):
         for b in self.blocks:
             b.move(distance)  
@@ -52,7 +52,7 @@ class BlockGroup(object):
     def update(self):
         if pygame.time.get_ticks() - self.time > self.updateTime:
             self.time = pygame.time.get_ticks()
-            self.move((0,1))
+            self.move((1,0))
       
                
     def getBlockIndexes(self):
