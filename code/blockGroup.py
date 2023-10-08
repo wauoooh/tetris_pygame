@@ -19,6 +19,17 @@ class BlockGroup(object):
             configList.append(config)
         return configList
     
+    def GenerateWallBlockConfig():
+        configList = []
+        for x in range(len(WALL_BLOCK_SHAPE[0])):
+            config = {
+                'blockType' : 0,
+                'rowIdx' : WALL_BLOCK_SHAPE[0][x][0],
+                'colIdx' : WALL_BLOCK_SHAPE[0][x][1]
+            }
+            configList.append(config)
+        return configList
+    
     def __init__(self, blockGroupType, width, height, blockConfigList, relPos):
         super().__init__()
         self.blocks = []
@@ -27,7 +38,12 @@ class BlockGroup(object):
         for config in blockConfigList:
             blk = Block(config['blockType'], config['rowIdx'], config['colIdx'], width, height, relPos)
             self.blocks.append(blk)
-            
+     
+    # 移动方块，distance = (x,y)，右正左负，下正上负           
+    def move(self, distance):
+        for b in self.blocks:
+            b.move(distance)  
+                    
     def draw(self, surface):
         for b in self.blocks:
             b.draw(surface)
@@ -35,13 +51,7 @@ class BlockGroup(object):
     def update(self):
         if pygame.time.get_ticks() - self.time > 100:
             self.time = pygame.time.get_ticks()
-            for b in self.blocks:
-                b.move((0,1))
-     
-    # 左右移动方块组，distance为标量，右正左负           
-    def move(self,distance):
-        for b in self.blocks:
-            b.move((distance, 0))        
+            self.move((0,1))
       
                
     def getBlockIndexes(self):
@@ -59,14 +69,3 @@ class BlockGroup(object):
     def addBlocks(self, blk ):
         self.blocks.append( blk )
         
-    def isOnLeftEdge(self):
-        for b in self.blocks:
-            if b.colIdx == 0:
-                return True
-        return False
-    
-    def isOnRightEdge(self):
-        for b in self.blocks:
-            if b.colIdx == GAME_COL-1:
-                return True
-        return False

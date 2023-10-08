@@ -17,6 +17,8 @@ while True:
             pygame.quit()
             sys.exit()
 
+    game.checkKeyPress()
+
     game.update()
         
     DISPLAYSURF.fill((0,0,0))
