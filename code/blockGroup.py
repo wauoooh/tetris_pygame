@@ -34,6 +34,7 @@ class BlockGroup(object):
         super().__init__()
         self.blocks = []
         self.blockGroupType = blockGroupType
+        self.updateTime = 700
         self.time = pygame.time.get_ticks()
         for config in blockConfigList:
             blk = Block(config['blockType'], config['rowIdx'], config['colIdx'], width, height, relPos)
@@ -49,7 +50,7 @@ class BlockGroup(object):
             b.draw(surface)
             
     def update(self):
-        if pygame.time.get_ticks() - self.time > 100:
+        if pygame.time.get_ticks() - self.time > self.updateTime:
             self.time = pygame.time.get_ticks()
             self.move((0,1))
       

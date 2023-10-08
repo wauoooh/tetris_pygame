@@ -24,9 +24,10 @@ class Game(pygame.sprite.Sprite):
                 self.pressFlag[0] = 1
                 self.pressTime[0] = pygame.time.get_ticks()
         if pressed[K_DOWN]:
-            if pygame.time.get_ticks() - self.pressTime[1] > MIN_PRESS_TIME:
-                self.pressFlag[1] = 1
-                self.pressTime[1] = pygame.time.get_ticks()
+            self.pressFlag[1] = 1
+            self.pressTime[1] = pygame.time.get_ticks()
+        else:
+            self.pressFlag[1] = 0
         if pressed[K_LEFT]:
             if pygame.time.get_ticks() - self.pressTime[2] > MIN_PRESS_TIME:
                 self.pressFlag[2] = 1
@@ -73,12 +74,17 @@ class Game(pygame.sprite.Sprite):
             self.dropBlockGroup.clearBlocks()
             self.dropBlockGroup = None
         
-        if self.pressFlag[2]+self.pressFlag[3]:
-            self.dropBlockGroup.move((self.pressFlag[3]-self.pressFlag[2],0))
-            if self.checkCollide():
-                self.dropBlockGroup.move((self.pressFlag[2]-self.pressFlag[3],0))
-            self.pressFlag[2] = 0
-            self.pressFlag[3] = 0
+        if self.dropBlockGroup:
+            if self.pressFlag[1]:
+                self.dropBlockGroup.updateTime = 100
+            else:
+                self.dropBlockGroup.updateTime = 700
+            if self.pressFlag[2]+self.pressFlag[3]:
+                self.dropBlockGroup.move((self.pressFlag[3]-self.pressFlag[2],0))
+                if self.checkCollide():
+                    self.dropBlockGroup.move((self.pressFlag[2]-self.pressFlag[3],0))
+                self.pressFlag[2] = 0
+                self.pressFlag[3] = 0
     
     def draw(self):
         self.fixedBlockGroup.draw(self.surface)
